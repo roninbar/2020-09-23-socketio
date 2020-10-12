@@ -1,13 +1,29 @@
 <html>
 
 <head>
-  <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>Chat</title>
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+  <h1>What is your name?</h1>
+  <div id="connect">
+    <form>
+      <input type="text" id="username">
+      <button type="submit">Connect</button>
+    </form>
+  </div>
+  <div id="messages" class="hide">
+    <form>
+      <input type="text" id="outgoing">
+      <button type="submit">Send</button>
+    </form>
+    <div id="whoistyping"></div>
+    <textarea id="incoming"></textarea>
+  </div>
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="javascripts/script.js"></script>
 
 </html>

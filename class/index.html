@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #messages div {
+        border: 1px solid black;
+    }
+
+    .hide {
+        visibility: hidden;
+    }
+
+    .show {
+        visibility: visible;
+    }
+</style>
+
+<body>
+    <h1>Sockets Example</h1>
+    <div class="hide">
+        User Name: <input type="text">
+        <button>Start Chat</button>
+    </div>
+    <div class="show">
+        <h2>Chat</h2>
+        <input type="text" id="mytext" />
+        <button id="mybtn">Send</button>
+        <span id="typing" class="hide">Typing...</span>
+        <div id="messages">
+        </div>
+
+
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script>
+    const socket = io();
+    // ws://localhost:5005
+
+    // setTimeout(() => {
+    //     socket.emit('my_chat', { text: 'this is my message' });
+    // }, 5000);
+
+    socket.on('my_chat', (message) => {
+        console.log(message);
+        const messages = document.getElementById('messages');
+        const myMessage = document.createElement('div');
+        myMessage.innerText = message;
+        messages.appendChild(myMessage);
+    });
+
+    // socket.on('typing', () => )
+
+    document.getElementById('mybtn').addEventListener('click', () => {
+        const { value } = document.getElementById('mytext');
+        socket.emit('my_chat', value);
+    });
+
+    // {
+    //     message: 'hello',
+    //     sender: 'ofer'
+    // }
+
+
+    socket.on('typing', () => {
+        const typing = document.getElementById('typing');
+        typing.classList.remove('hide');
+        typing.classList.add('show');
+
+        setTimeout(() => {
+            typing.classList.remove('show');
+            typing.classList.add('hide');
+        }, 700);
+    });
+
+    document.getElementById('mytext').addEventListener('keyup', () => {
+        socket.emit('typing');
+    });
+
+</script>
+
+</html>
